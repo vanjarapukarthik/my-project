@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: 59 130 246;
+  --color-primary-dark: 37 99 235;
+  --color-surface: 248 250 252;
+  --color-border: 226 232 240;
+  --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+  /* Professional blue - telemedicine style (header gradient) */
+  --header-gradient-start: #3b82f6;
+  --header-gradient-end: #2563eb;
+  /* Page background - full-page blue gradient */
+  --bg-gradient-start: #3b82f6;
+  --bg-gradient-mid: #2f6fe9;
+  --bg-gradient-end: #2563eb;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply antialiased text-slate-800;
+  font-family: var(--font-sans);
+  background: linear-gradient(
+    180deg,
+    var(--bg-gradient-start) 0%,
+    var(--bg-gradient-mid) 50%,
+    var(--bg-gradient-end) 100%
+  );
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+/* Header gradient - full-width modern blue bar */
+.header-gradient {
+  background: linear-gradient(
+    90deg,
+    var(--header-gradient-start) 0%,
+    var(--header-gradient-end) 100%
+  );
+}
+
+/* Page layout: company dashboard standard */
+.page-container {
+  @apply max-w-[1600px] mx-auto w-full px-4 sm:px-6 lg:px-10 py-6 lg:py-8;
+}
+
+/* Card: professional elevation and border (blue healthcare theme) */
+.dashboard-card {
+  @apply bg-white rounded-xl border border-slate-200/80 shadow-sm overflow-hidden;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05), 0 1px 2px -1px rgb(0 0 0 / 0.05);
+}
+
+.dashboard-card:hover {
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+}
+
+/* Page title block */
+.page-header {
+  @apply mb-6 lg:mb-8;
+}
+
+.page-title {
+  @apply text-2xl lg:text-3xl font-bold text-slate-900 tracking-tight;
+}
+
+.page-subtitle {
+  @apply text-slate-500 text-sm mt-1;
+}
+
+/* Buttons */
+.btn-primary {
+  @apply inline-flex items-center justify-center px-5 py-2.5 rounded-lg font-medium text-white bg-blue-600 hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition;
+}
+
+.btn-secondary {
+  @apply inline-flex items-center justify-center px-5 py-2.5 rounded-lg font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 focus:ring-2 focus:ring-slate-300 transition;
+}
+
+/* Self-view mirror for video call */
+video.mirror {
+  transform: scaleX(-1);
+}

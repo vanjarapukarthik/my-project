@@ -1,0 +1,18 @@
+{
+  "name": "telehealth-platform",
+  "version": "1.0.0",
+  "description": "Full-stack telehealth platform with Node.js/Express backend, React frontend, and Python ML (revenue forecasting).",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev": "nodemon backend/server.js",
+    "frontend": "npm run start --prefix frontend"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
