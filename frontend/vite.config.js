@@ -6,11 +6,11 @@ export default defineConfig({
   server: {
     port: 5173,
     proxy: {
-      "/api": "http://localhost:5000",
-      "/socket.io": { target: "http://localhost:5000", ws: true },
-      "/token": "http://localhost:5000",
-      "/audit": "http://localhost:5000",
-      "/health": "http://localhost:5000",
+      "/api": "http://3.109.60.91:3000",
+      "/socket.io": { target: "http://3.109.60.91:3000", ws: true },
+      "/token": "http://3.109.60.91:3000",
+      "/audit": "http://3.109.60.91:3000",
+      "/health": "http://3.109.60.91:3000",
     },
   },
 });

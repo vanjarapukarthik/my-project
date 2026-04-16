@@ -1,0 +1,22 @@
+[Unit]
+Description=Telehealth API (Node)
+After=network.target
+
+[Service]
+Type=simple
+User=ec2-user
+Group=ec2-user
+WorkingDirectory=/home/ec2-user/backend
+Environment=NODE_ENV=production
+# App loads .env from WorkingDirectory via dotenv
+ExecStart=/usr/bin/node server.js
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+
+# Notes (edit before use):
+# - If your project lives elsewhere, change WorkingDirectory.
+# - Run: which node   If not /usr/bin/node, update ExecStart to that full path (common with nvm: use a wrapper script).
+# - Open EC2 security group inbound TCP for your PORT (from .env, default 5000).

@@ -18,10 +18,17 @@ const io = new Server(server, {
 app.use(cors({ origin: env.CORS_ORIGIN, credentials: true }));
 app.use(express.json());
 
+app.get("/", (req, res) => {
+  res.json({
+    success: true,
+    message: "API is working 🚀",
+  });
+});
+
 app.use("/api", routes);
 
 app.get("/health", (req, res) => {
-  res.json({ success: true, message: "Telehealth API is running" });
+  res.json({ status: "healthy" });
 });
 
 app.use(notFound);

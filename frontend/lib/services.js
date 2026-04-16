@@ -1,10 +1,10 @@
 /**
  * Telehealth Platform – API services
  * ES6, fetch-based client for Node.js/Express backend.
- * Default "/api" uses Vite proxy (dev) or same-origin (prod). Override with VITE_API_URL for full URL.
+ * Defaults to the configured backend URL. Override with VITE_API_URL if needed.
  */
 
-const API_BASE = import.meta.env?.VITE_API_URL ?? "/api";
+const API_BASE = import.meta.env?.VITE_API_URL ?? "http://3.109.60.91:3000/api";
 
 const getToken = () => localStorage.getItem("token");
 
