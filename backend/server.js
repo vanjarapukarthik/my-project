@@ -8,7 +8,7 @@ import { notFound, errorHandler } from "./middleware/errorHandler.js";
 
 const app = express();
 
-app.use(cors({ origin: env.CORS_ORIGIN, credentials: true }));
+app.use(cors({ origin: env.corsOrigin, credentials: true }));
 app.use(express.json());
 
 app.get("/", (req, res) => {
@@ -38,12 +38,12 @@ function getRoomPeers(roomId) {
 function startServer() {
   const PORT = process.env.PORT || 5000;
 
-  const server = app.listen(PORT, "0.0.0.0", () => {
-    console.log(`Backend running on port ${PORT}`);
+  const server = app.listen(PORT, env.HOST, () => {
+    console.log(`Backend listening on ${env.HOST}:${PORT}`);
   });
 
   const io = new Server(server, {
-    cors: { origin: env.CORS_ORIGIN, credentials: true },
+    cors: { origin: env.corsOrigin, credentials: true },
     path: env.WS_PATH,
   });
 
