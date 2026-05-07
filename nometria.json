@@ -1,0 +1,18 @@
+{
+  "name": "telehealth-platform",
+  "framework": "node",
+  "platform": "aws",
+  "build": {
+    "command": "npm run install:all && npm run build",
+    "output": "frontend/dist"
+  },
+  "ignore": [
+    "**/node_modules/**",
+    ".git",
+    "**/.env",
+    "**/.env.local",
+    "**/.env.*",
+    "frontend/dist"
+  ],
+  "env": {}
+}

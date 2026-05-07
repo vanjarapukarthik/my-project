@@ -1,28 +1,50 @@
 import express from "express";
 import { Server } from "socket.io";
 import cors from "cors";
+import path from "path";
+import fs from "fs";
+import { fileURLToPath } from "url";
 import { env } from "./config/env.js";
 import connectDB from "./config/db.js";
 import routes from "./routes/index.js";
 import { notFound, errorHandler } from "./middleware/errorHandler.js";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const frontendDist = path.join(__dirname, "..", "frontend", "dist");
+const serveSpa =
+  env.NODE_ENV === "production" && fs.existsSync(path.join(frontendDist, "index.html"));
 
 const app = express();
 
 app.use(cors({ origin: env.corsOrigin, credentials: true }));
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.json({
-    success: true,
-    message: "API is working 🚀",
+if (!serveSpa) {
+  app.get("/", (req, res) => {
+    res.json({
+      success: true,
+      message: "API is working 🚀",
+    });
   });
-});
+}
 
 app.use("/api", routes);
 
 app.get("/health", (req, res) => {
   res.json({ status: "healthy" });
 });
+
+if (serveSpa) {
+  app.use(express.static(frontendDist));
+  app.get("*", (req, res, next) => {
+    if (req.method !== "GET" && req.method !== "HEAD") return next();
+    const p = req.path;
+    if (p.startsWith("/api") || p === "/health" || p.startsWith(env.WS_PATH || "/socket.io")) {
+      return next();
+    }
+    res.sendFile(path.join(frontendDist, "index.html"));
+  });
+}
 
 app.use(notFound);
 app.use(errorHandler);
