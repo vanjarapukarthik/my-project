@@ -37,6 +37,13 @@ async function request(endpoint, options = {}) {
   const data = await res.json().catch(() => ({}));
 
   if (!res.ok) {
+    const hasBody = data && typeof data === "object" && Object.keys(data).length > 0;
+    const status = res.status;
+    if (!hasBody && (status === 500 || status === 502 || status === 504)) {
+      throw new Error(
+        "API server not reachable. Start the backend in another terminal: cd backend && npm run dev (needs port 5000 while the frontend runs)."
+      );
+    }
     const message = data?.message || res.statusText || "Request failed";
     throw new Error(message);
   }

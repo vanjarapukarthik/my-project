@@ -1,6 +1,16 @@
 import dotenv from "dotenv";
+import path from "path";
+import { fileURLToPath } from "url";
 
-dotenv.config();
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+/** Project root `.env` (recommended). Path: backend/config → ../.. */
+const rootEnvPath = path.join(__dirname, "..", "..", ".env");
+/** Legacy `backend/.env` (optional fallback). */
+const backendEnvPath = path.join(__dirname, "..", ".env");
+
+// Load root first, then backend `.env` overrides (so `backend/.env` wins for MONGODB_URI, etc.).
+dotenv.config({ path: rootEnvPath });
+dotenv.config({ path: backendEnvPath, override: true });
 
 const rawCors = process.env.CORS_ORIGIN || "http://localhost:5173";
 /** Value for `cors` / Socket.IO: string or array when CORS_ORIGIN is comma-separated. */
@@ -26,3 +36,9 @@ export const env = {
   corsOrigin,
   WS_PATH: process.env.WS_PATH || "/socket.io",
 };
+
+if (env.NODE_ENV === "development") {
+  console.log(
+    `[env] Loaded from root/backend .env | PORT=${env.PORT} | MONGODB_URI=${env.MONGODB_URI ? "set" : "MISSING"} | JWT_SECRET=${env.JWT_SECRET ? "set" : "MISSING"} | CORS=${rawCors}`
+  );
+}
